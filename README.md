@@ -3,17 +3,13 @@ Quantify the robustness of ML-based traffic engineering algorithms in environmen
 
 ## Definition of Robustness
 - 1. [Maximum Concurrent Flow(MCF)](https://dl.acm.org/doi/pdf/10.1145/77600.77620)
-$$
-\begin{align*}
-\text{Maximize}\ &\lambda \\
-\text{subject to} \\
-&0 \leq f(u, v) \leq c(u, v) &&\forall (u, v) \in E, \\
-&\sum_{u \in V} f(u, v) = 0 &&\forall v \in V \setminus \{ \text{sources, sinks} \}, \\
-&\sum_{(s, v) \in E} f(s, v) \geq \lambda, \\
-&\sum_{(v, t) \in E} f(v, t) \geq \lambda.
-\end{align*}
 
-$$
+Maximize $λ$ 
+subject to:
+0 $\leq$ $f(u, v)$ $\leq$ $c(u, v)$ for all $(u, v) \in E$,
+$\sum f(u, v) = 0$ for all $v \in V \setminus {\text{sources, sinks}}$,
+$\sum f(s, v) \geq \lambda$ for all $(s, v) \in E$,
+$\sum f(v, t) \geq \lambda$ for all $(v, t) \in E$.
 
 * $\lambda$: Represents the objective value to be maximized, indicating the maximum concurrent flow rate in the network.
 * $f(u, v)$ : Represents the flow from node $u$ to $v$.
@@ -23,11 +19,9 @@ $$
 * $\text{sources, sinks}$: Represent the sources (starting points) and sinks (destinations) in the network.
 
 
+2.  Normalized Changes
 
-- 2.  Normalized Change
-$$
-\text{Normalized Change} = \frac{\| T(t + \Delta t) - T(t) \|_2}{\| T(t) \|_2}
-$$
+$\text{Normalized Change} = \frac{\| T(t + \Delta t) - T(t) \|_2}{\| T(t) \|_2}$
 
 * $T(t)$: Represents the traffic matrix at time $t$.
 * $T(t + \Delta t)$: Represents the traffic matrix at a later time $t + \Delta t$.
