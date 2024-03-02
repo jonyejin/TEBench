@@ -36,7 +36,7 @@ $$
 
 
   * $N$: Represents the total number of data sets or scenarios considered.
-    * *$\lambda_i$: Represents the Maximum Concurrent Flow (MCF) rate for the $i$-th data set or scenario.
-    * *$\beta$: A weighting factor that modulates the impact of the Normalized Change on the overall metric.
-    * $NC_i$: The Normalized Change for the $i$-th data set, indicating the change in the traffic matrix at the specific time step relative to its initial state.
-    * $\textbf{Robustness}$: A measure that integrates both the efficiency of flow across the network (via $\lambda_i$) and the stability of this flow over time (accounting for changes via $NC_i$).
+*$\lambda_i$: Represents the Maximum Concurrent Flow (MCF) rate for the $i$-th data set or scenario.
+* $\beta$: A weighting factor that modulates the impact of the Normalized Change on the overall metric.
+* $NC_i$: The Normalized Change for the $i$-th data set, indicating the change in the traffic matrix at the specific time step relative to its initial state.
+* $\textbf{Robustness}$: A measure that integrates both the efficiency of flow across the network (via $\lambda_i$) and the stability of this flow over time (accounting for changes via $NC_i$).
