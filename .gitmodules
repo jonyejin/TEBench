@@ -1,9 +1,6 @@
-[submodule "git@github.com:jonyejin/TEBench.git"]
-	path = git@github.com:jonyejin/TEBench.git
+[submodule "DOTE"]
+	path = DOTE
 	url = https://github.com/jonyejin/DOTE.git
-[submodule "/Users/yejin/TEBench/DOTE"]
-	path = /Users/yejin/TEBench/DOTE
-	url = https://github.com/jonyejin/DOTE.git
-[submodule "/Users/yejin/TEBench/TEAL"]
-	path = /Users/yejin/TEBench/TEAL
-	url = https://github.com/jonyejin/teal
+[submodule "TEAL"]
+	path = TEAL
+	url = https://github.com/jonyejin/TEAL.git
