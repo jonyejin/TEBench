@@ -1,0 +1,9 @@
+[submodule "git@github.com:jonyejin/TEBench.git"]
+	path = git@github.com:jonyejin/TEBench.git
+	url = https://github.com/PredWanTE/DOTE.git
+[submodule "/Users/yejin/TEBench/DOTE"]
+	path = /Users/yejin/TEBench/DOTE
+	url = https://github.com/PredWanTE/DOTE.git
+[submodule "/Users/yejin/TEBench/TEAL"]
+	path = /Users/yejin/TEBench/TEAL
+	url = https://github.com/harvard-cns/teal
