@@ -127,43 +127,43 @@ def save_traffic_matrices(tms, filename):
             np.savetxt(file, matrix, fmt='%f')
             file.write('\n')  # Separate matrices with two newlines
 
-def main(input_dir, output_base_dir, a_values):
-    """
-    Process all .hist files in a directory, add noise, and save the outputs to new directories.
+# def main(input_dir, output_base_dir, a_values):
+#     """
+#     Process all .hist files in a directory, add noise, and save the outputs to new directories.
 
-    :param input_dir: Directory containing .hist files.
-    :param output_base_dir: Base directory to save perturbed traffic matrices.
-    :param a_values: List of noise factors to apply.
-    """
-    # Ensure output base directory exists
-    if not os.path.exists(output_base_dir):
-        os.makedirs(output_base_dir)
+#     :param input_dir: Directory containing .hist files.
+#     :param output_base_dir: Base directory to save perturbed traffic matrices.
+#     :param a_values: List of noise factors to apply.
+#     """
+#     # Ensure output base directory exists
+#     if not os.path.exists(output_base_dir):
+#         os.makedirs(output_base_dir)
 
-    # List all .hist files in the input directory
-    input_files = glob.glob(os.path.join(input_dir, '*.hist'))
+#     # List all .hist files in the input directory
+#     input_files = glob.glob(os.path.join(input_dir, '*.hist'))
 
-    for file_path in input_files:
-        # Read traffic matrices from the current file
-        traffic_matrices = read_traffic_matrices(file_path)
+#     for file_path in input_files:
+#         # Read traffic matrices from the current file
+#         traffic_matrices = read_traffic_matrices(file_path)
 
-        for a in a_values:
-            # Generate perturbed traffic matrices
-            perturbed_traffic_matrices = add_noise_to_traffic(traffic_matrices, a)
+#         for a in a_values:
+#             # Generate perturbed traffic matrices
+#             perturbed_traffic_matrices = add_noise_to_traffic(traffic_matrices, a)
 
-            # Prepare output directory and filename
-            output_dir = os.path.join(output_base_dir, f'test_noise_{a}')
-            if not os.path.exists(output_dir):
-                os.makedirs(output_dir)
-            output_filename = os.path.join(output_dir, os.path.basename(file_path))
+#             # Prepare output directory and filename
+#             output_dir = os.path.join(output_base_dir, f'test_noise_{a}')
+#             if not os.path.exists(output_dir):
+#                 os.makedirs(output_dir)
+#             output_filename = os.path.join(output_dir, os.path.basename(file_path))
 
-            # Save perturbed traffic matrices
-            save_traffic_matrices(perturbed_traffic_matrices, output_filename)
-            print(f"Perturbed traffic matrices for a={a} saved in {output_filename}")
+#             # Save perturbed traffic matrices
+#             save_traffic_matrices(perturbed_traffic_matrices, output_filename)
+#             print(f"Perturbed traffic matrices for a={a} saved in {output_filename}")
 
 
-# Example usage
-if __name__ == "__main__":
-    input_directory = 'DOTE/networking_envs/data/Abilene/test'
-    output_base_directory = 'DOTE/networking_envs/data/Abilene/test_perturb'
-    noise_levels = [0.1, 0.25, 0.35]
-    main(input_directory, output_base_directory, noise_levels)
+# # Example usage
+# if __name__ == "__main__":
+#     input_directory = 'DOTE/networking_envs/data/Abilene/test'
+#     output_base_directory = 'DOTE/networking_envs/data/Abilene/test_perturb'
+#     noise_levels = [0.1, 0.25, 0.35]
+#     main(input_directory, output_base_directory, noise_levels)
