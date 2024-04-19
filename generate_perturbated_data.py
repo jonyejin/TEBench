@@ -7,7 +7,7 @@ from add_perturbation import (
     save_traffic_matrices,
     read_traffic_matrices
 )
-from collect_optimal import main as collect_optimal_main
+# from collect_optimal import main as collect_optimal_main
 
 def process_and_save_matrices(input_dir, output_base_dir, a_values, file_format):
     """
@@ -46,11 +46,11 @@ def process_and_save_matrices(input_dir, output_base_dir, a_values, file_format)
 
                         save_traffic_matrices(perturbed_traffic_matrices, output_filename)
                         # Absolute path of the newly created .hist file
-                        hist_file_absolute_path = os.path.abspath(output_filename)
-                        topology_file_path = os.path.abspath(os.path.join(input_dir, '..', '..', '..', '..', 'data', topology_name, f'{topology_name}_int.txt'))
+                        # hist_file_absolute_path = os.path.abspath(output_filename)
+                        # topology_file_path = os.path.abspath(os.path.join(input_dir, '..', '..', '..', '..', 'data', topology_name, f'{topology_name}_int.txt'))
 
-                        args_for_collect_optimal = [hist_file_absolute_path, 'test', '--topology-file', topology_file_path]
-                        collect_optimal_main(args_for_collect_optimal)
+                        # args_for_collect_optimal = [hist_file_absolute_path, 'test', '--topology-file', topology_file_path]
+                        # collect_optimal_main(args_for_collect_optimal)
 
 
 
