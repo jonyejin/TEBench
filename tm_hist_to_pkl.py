@@ -1,54 +1,54 @@
-import pandas as pd
 import os
-import glob
+import pickle
 import numpy as np
 import re
+import glob
+
+import pandas as pd
 
 # Configuration values
-src_dir_1 = 'DOTE/networking_envs/data/Abilene/train'
-src_dir_2 = 'DOTE/networking_envs/data/Abilene/test'
-dest_dir = 'TEAL/traffic-matrices/real'
-topology = 'Abilene'
+src_dir = '/home/azureuser/TEBench/traffic-matrices/perturbated/B4'  # Source directory for .hist files
+topology = "B4"
 
-# Create the output directory if it doesn't exist
-if not os.path.exists(dest_dir):
-    os.makedirs(dest_dir)
+# Ensure that the source directory exists
+if not os.path.exists(src_dir):
+    os.makedirs(src_dir)
 
-# Function to extract number from filename for sorting and indexing
+# Function to extract numbers from filename for sorting and indexing
 def extract_numbers(filename):
     numbers = re.findall(r'\d+', filename)
     return [int(num) for num in numbers] if numbers else [0]
 
-# Function to find and sort .hist files from multiple directories
-def find_and_sort_hist_files(*directories):
-    hist_files = []
-    for directory in directories:
-        hist_files += glob.glob(os.path.join(directory, '*.hist'))
-    return sorted(hist_files, key=extract_numbers)
+# Function to read .hist file, convert its content to a numpy array
+def read_and_convert_hist_file(hist_file_path):
+    with open(hist_file_path, 'r') as file:
+        data = []
+        for line in file:
+            line_data = list(map(float, line.strip().split()))
+            data.append(line_data)
+    return np.array(data)
 
-# Gather all .hist files from both directories
-all_hist_files = find_and_sort_hist_files(src_dir_1, src_dir_2)
+# Function to save data to a pickle file
+def save_to_pkl(data, output_file_path):
+    with open(output_file_path, 'wb') as pkl_file:
+        pickle.dump(data, pkl_file)
 
-# Function to convert .hist files to individual .pkl files
-def convert_to_individual_pkl(files, output_dir):
-    for file_path in files:
-        with open(file_path, 'r') as f:
-            lines = f.readlines()
+# Function to process directories and convert each row in .hist files to a .pkl file
+def process_directory(base_dir, topology):
+    for root, dirs, files in os.walk(base_dir):
+        for file in files:
+            if file.endswith('.hist'):
+                hist_file_path = os.path.join(root, file)
+                data_array = read_and_convert_hist_file(hist_file_path)
 
-        base_name = os.path.basename(file_path)
-        base_index = extract_numbers(base_name)[0]  # Base index from file name
+                for index, row_data in enumerate(data_array):
+                    # Filename incorporates the index of the row in the .hist file
+                    pkl_file_name = f'{topology}.json_real_{os.path.splitext(file)[0]}_{index}_1.0_traffic-matrix.pkl'
+                    output_file_path = os.path.join(root, pkl_file_name)
 
-        for i, line in enumerate(lines):
-            # Convert the line to a numpy array right away
-            data = np.array(list(map(float, line.split())))
-            # Create a DataFrame from a numpy array directly, without reshaping
-            df = pd.DataFrame(data)
+                    save_to_pkl(pd.DataFrame(row_data), output_file_path)
+                    print(f"Converted row {index} of {hist_file_path} to {output_file_path}")
 
-            matrix_order = base_index + i  # Increment index for each line
-            pkl_file_name = f'{topology}.json_real_{matrix_order}_1.0_traffic-matrix.pkl'
-            output_path = os.path.join(output_dir, pkl_file_name)
-            df.to_pickle(output_path)
-
-# Convert and save all .hist files to individual .pkl files in the destination directory
-convert_to_individual_pkl(all_hist_files, dest_dir)
-print(f'Converted all hist files to individual pkl files in {dest_dir}')
+# Run the processing function
+process_directory(src_dir, topology)
+print(f'All rows in .hist files have been processed and converted to .pkl files in {src_dir}')
