@@ -39,8 +39,10 @@ def convert_to_individual_pkl(files, output_dir):
         base_index = extract_numbers(base_name)[0]  # Base index from file name
 
         for i, line in enumerate(lines):
+            # Convert the line to a numpy array right away
             data = np.array(list(map(float, line.split())))
-            df = pd.DataFrame(data.reshape(1, -1))  # Reshape data as single row DataFrame
+            # Create a DataFrame from a numpy array directly, without reshaping
+            df = pd.DataFrame(data)
 
             matrix_order = base_index + i  # Increment index for each line
             pkl_file_name = f'{topology}.json_real_{matrix_order}_1.0_traffic-matrix.pkl'
