@@ -30,10 +30,10 @@ def save_graph_to_file(graph, filename):
         json.dump(data, file, indent=4)
 
 # Read the matrix from a file
-matrix = read_matrix_from_file('DOTE/networking_envs/data/Abilene/Abilene_int.txt')
+matrix = read_matrix_from_file('DOTE/networking_envs/data/GEANT/GEANT_int.txt')
 
 # Create a graph from the matrix
 graph = create_graph_from_matrix(matrix)
 
 # Save the graph to a file
-save_graph_to_file(graph, 'TEAL/topologies/Abilene.json')
+save_graph_to_file(graph, 'TEAL/topologies/GEANT.json')
