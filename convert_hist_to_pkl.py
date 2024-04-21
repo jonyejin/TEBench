@@ -1,14 +1,22 @@
 import os
 import pickle
 
+
 def read_hist_file(hist_file_path):
-    """Read a .hist file and convert its content to a list of lists of floats."""
+    """Read a .hist file and convert its content to a list of lists of floats.
+       Skip empty files or return None for empty files."""
     data = []
     with open(hist_file_path, 'r') as file:
         for line in file:
             # Convert each line to a list of floats
             line_data = list(map(float, line.strip().split()))
             data.append(line_data)
+
+    # Check if data was actually read
+    if not data:  # This checks if the list is empty
+        print(f"No data found in file: {hist_file_path}")
+        return None  # or return an empty list [], depending on how you want to handle it
+
     return data
 
 def save_to_pkl(data, output_file_path):
@@ -19,7 +27,8 @@ def save_to_pkl(data, output_file_path):
 def convert_hist_to_pkl(hist_file_path, pkl_file_path):
     """Convert a .hist file to a .pkl file."""
     data = read_hist_file(hist_file_path)
-    save_to_pkl(data, pkl_file_path)
+    if data is not None:
+        save_to_pkl(data, pkl_file_path)
 
 def process_directory(base_dir):
     """Process all .hist files in the directory tree starting at base_dir."""

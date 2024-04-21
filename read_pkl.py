@@ -13,6 +13,5 @@ def load_pkl_files(filename):
 
 # Specify the directory containing your .pkl files
 # Load and display the contents of all .pkl files in the specified directory
-load_pkl_files( "/home/azureuser/TEBench/traffic-matrices/perturbated/B4/Gaussian_Multiplicative_Noise/0.2/B4.json_real_test_1_1.0_traffic-matrix.pkl")
-load_pkl_files( "/home/azureuser/TEBench/TEAL/traffic-matrices/real/Abilene.json_real_1_1.0_traffic-matrix.pkl")
-
+# load_pkl_files( "/home/azureuser/TEBench/traffic-matrices/perturbated/B4/Gaussian_Multiplicative_Noise/0.2/B4.json_real_test_9_1.0_traffic-matrix.pkl")
+load_pkl_files( "/home/azureuser/TEBench/TEAL/traffic-matrices/real/GEANT.json_real_139_1.0_traffic-matrix.pkl")
