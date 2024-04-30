@@ -12,7 +12,7 @@ def json_to_nnet(json_data):
 
     return "\n".join(lines)
 
-json_data = json.loads(open('TEAL/topologies/B4.json', 'r').read())
+json_data = json.loads(open('../TEAL/topologies/B4.json', 'r').read())
 
 nnet_str = json_to_nnet(json_data)
 

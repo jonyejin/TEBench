@@ -5,7 +5,7 @@ import numpy as np
 import re
 
 # Configuration values
-src_dir = 'TEAL/traffic-matrices/real/'  # Directory where .pkl files are located
+src_dir = '../TEAL/traffic-matrices/real/'  # Directory where .pkl files are located
 dest_dir = 'DOTE/networking_envs/data/B4/train/B4.json_real_0_1.0_traffic-matrix.hist'  # Directory to save the .hist files
 
 # Function to extract number from filename for sorting

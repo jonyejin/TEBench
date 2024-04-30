@@ -59,7 +59,7 @@ def read_optimal_mcf(filename):
 
 def main():
     # Matrix files
-    initial_filename = '/Users/yejin/TEBench/DOTE/networking_envs/data/Abilene/test/4.hist'
+    initial_filename = '/DOTE/networking_envs/data/Abilene/test/4.hist'
     new_filename = '/Users/yejin/TEBench/DOTE/networking_envs/data/Abilene/test_noise_0.1/4.hist'
     # MCF hists file
     mcf_filename = '/Users/yejin/TEBench/DOTE/networking_envs/data/Abilene/test_noise_0.1/4.opt'

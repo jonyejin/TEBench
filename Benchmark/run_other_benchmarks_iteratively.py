@@ -2,7 +2,7 @@ import os
 import subprocess
 
 # Configuration
-root_dir = os.path.expanduser('~/TEBench/traffic-matrices/perturbated')  # Adjust root directory based on your system setup
+root_dir = os.path.expanduser('/traffic-matrices/perturbated')  # Adjust root directory based on your system setup
 # Adjust root directory
 scripts = [
     # "path_form.py",

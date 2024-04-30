@@ -2,7 +2,7 @@ import os
 import subprocess
 
 # Configuration
-root_dir = os.path.expanduser('~/TEBench/traffic-matrices/perturbated')  # Expand user to get absolute path
+root_dir = os.path.expanduser('/traffic-matrices/perturbated')  # Expand user to get absolute path
 
 
 # Gather all possible configurations

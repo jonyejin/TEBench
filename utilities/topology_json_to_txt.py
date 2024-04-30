@@ -18,7 +18,7 @@ def json_to_adjacency_matrix(json_data):
                            for source in range(n))
     return matrix_str
 
-json_data = json.loads(open('TEAL/topologies/B4.json', 'r').read())
+json_data = json.loads(open('../TEAL/topologies/B4.json', 'r').read())
 
 # Convert the JSON data to adjacency matrix string
 adj_matrix_str = json_to_adjacency_matrix(json_data)

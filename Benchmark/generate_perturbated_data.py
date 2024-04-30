@@ -1,5 +1,5 @@
 import os
-from add_perturbation import (
+from Benchmark.add_perturbation import (
     # add_hybrid_noise,
     add_gaussian_multiplicative_noise,
     add_noise_to_traffic,  # previously known as add_noise_to_traffic
@@ -58,7 +58,7 @@ def process_and_save_matrices(input_dir, output_base_dir, a_values, file_format)
 test_folders = ["Abilene", "B4", "GEANT", "Kdl", "ASN2k"]
 
 # Assuming 'traffic-matrices' directory is at the same level as 'DOTE' directory
-output_base_dir = 'traffic-matrices'
+output_base_dir = '../traffic-matrices'
 
 # These values are placeholders, replace with your actual noise levels and file format
 noise_levels = [0.2, 0.4, 0.6, 0.8, 1.0, 1.2]
@@ -66,5 +66,5 @@ file_format = 'hist'  # File format is .hist
 
 # Iterating over each topology folder
 for folder in test_folders:
-    input_directory = os.path.join('DOTE/networking_envs/data', folder, 'test')
+    input_directory = os.path.join('../DOTE/networking_envs/data', folder, 'test')
     process_and_save_matrices(input_directory, output_base_dir, noise_levels, file_format)
