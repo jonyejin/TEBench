@@ -28,12 +28,12 @@ def gather_configurations(root_dir):
 def run_teal_script(configurations):
     for topology, noise_type, noise_level, slice_test_stop in configurations:
         command = (
-            f"python teal.py --obj max_concurrent_flow --topo {topology}.json --epochs 0 "
+            f"python teal.py --obj min_max_link_util --topo {topology}.json --epochs 0 "
             f"--perturbation_directory {root_dir} --noise_level {noise_level} "
             f"--noise_type {noise_type} --mode test --slice-train-start 0 --slice-train-stop 0 "
             f"--slice-val-start 0 --slice-val-stop 0 --slice-test-start 1 --slice-test-stop {slice_test_stop}"
         )
-        output_file_path = f"{root_dir}/{topology}_{noise_type}_{noise_level}_output.txt"
+        output_file_path = f"{root_dir}/{topology}_{noise_type}_{noise_level}_output_min_max_link_util.txt"
         print("Running command:", command)
         print("Saving output to:", output_file_path)
 

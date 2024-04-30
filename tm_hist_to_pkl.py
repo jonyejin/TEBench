@@ -53,9 +53,8 @@ def process_directory(base_dir):
                 data_array = read_and_convert_hist_file(hist_file_path)
 
                 for index, row_data in enumerate(data_array):
-                    pkl_file_name = f'{topology}.json_real_{os.path.splitext(file)[0]}_{index}_1.0_traffic-matrix.pkl'
+                    pkl_file_name = f'{topology}.json_real_{index}_1.0_traffic-matrix.pkl'
                     output_file_path = os.path.join(root, pkl_file_name)
-
                     save_to_pkl(pd.DataFrame(row_data), output_file_path)
 
 # Run the processing function for all subdirectories under the root directory
