@@ -153,13 +153,13 @@ def loss_fn_maxflow_maxconc(y_pred_batch, y_true_batch, env):
         max_flow_on_tunnel = y_pred / alpha
         max_flow_per_commodity = commodities_to_paths.matmul(max_flow_on_tunnel.transpose(0,1))
 
-        if props.opt_function == "MAXFLOW": #MAX FLOW
+        if props.opt_function == "MAXFLOW": # MAX FLOW
             max_mcf = torch.sum(torch.minimum(max_flow_per_commodity.transpose(0,1), y_true))
             
             loss = -max_mcf if max_mcf.item() == 0.0 else -max_mcf/max_mcf.item()
             loss_val = 1.0 if opt == 0.0 else max_mcf.item()/SizeConsts.BPS_TO_GBPS(opt)
         
-        elif props.opt_function == "MAXCONC": #MAX CONCURRENT FLOW
+        elif props.opt_function == "MAXCONC": # MAX CONCURRENT FLOW
             actual_flow_per_commodity = torch.minimum(max_flow_per_commodity.transpose(0,1), y_true)
             max_concurrent_vec = torch.full_like(actual_flow_per_commodity, fill_value=1.0)
             mask = y_true != 0
@@ -173,7 +173,7 @@ def loss_fn_maxflow_maxconc(y_pred_batch, y_true_batch, env):
             loss = -max_concurrent if max_concurrent.item() == 0.0 else -max_concurrent/max_concurrent.item()
             loss_val = 1.0 if opt == 0.0 else max_concurrent.item()/opt
                 
-            #update concurrent flow statistics
+            # update concurrent flow statistics
             if concurrent_flow_cdf != None:
                 curr_dm_conc_flow_cdf = [0]*len(concurrent_flow_cdf)
                 for j in range(env.get_num_nodes() * (env.get_num_nodes() - 1)):
@@ -207,6 +207,7 @@ paths_to_edges = torch.sparse_coo_tensor(np.vstack((pte_coo.row, pte_coo.col)), 
 batch_size = props.so_batch_size
 n_epochs = props.so_epochs
 concurrent_flow_cdf = None
+
 if props.opt_function == "MAXUTIL":
     NeuralNetwork = NeuralNetworkMaxUtil
     loss_fn = loss_fn_maxutil
@@ -230,7 +231,7 @@ if props.so_mode == SOMode.TRAIN: #train
     train_dataset = DmDataset(props, env, False)
     # create a data loader for the train set
     train_dl = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-    #create the model
+    # create the model
     model = NeuralNetwork(props.hist_len*env.get_num_nodes()*(env.get_num_nodes()-1), env._optimizer._num_paths)
     model.double()
     # optimizer
@@ -253,8 +254,11 @@ if props.so_mode == SOMode.TRAIN: #train
                 loss_avg = loss_sum / loss_count
                 tepoch.set_postfix(loss=loss_avg)
 
-    #save the model
-    torch.save(model, 'model_dote.pkl')
+    # Save the model
+    project_root = os.path.dirname(os.path.abspath(__file__)) # NOT TEBench, it is DOTE.
+    model_path = os.path.join(project_root, 'trained_models', props.ecmp_topo,
+                              f'{props.ecmp_topo}_{props.opt_function}_epoch_{props.so_batch_size}.pkl')
+    torch.save(model, model_path)
 
 elif props.so_mode == SOMode.TEST: #test
     # create the dataset
@@ -277,7 +281,7 @@ elif props.so_mode == SOMode.TEST: #test
                 break
             avg_loss = sum(test_losses) / len(test_losses)
             print(f"Test Error: \n Avg loss: {avg_loss:>8f} \n")
-            #print statistics to file
+            # print statistics to file
             with open(props.graph_base_path + '/' + props.ecmp_topo + '/' + 'so_stats.txt', 'w') as f:
                 import statistics
                 dists = [float(v) for v in test_losses]
