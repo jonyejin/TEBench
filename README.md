@@ -3,9 +3,14 @@ Quantify the robustness of ML-based traffic engineering algorithms in environmen
 ###  Original Utilities provided by TEBench
 1. **Perturbated Matrices Generation**: Generate perturbated traffic matrices with varying levels of sparsity and demand changes.
 
-```python benchmark/add_perturbation.py```
+```python
+python benchmark/add_perturbation.py
+```
 2. **LP-based Traffic Solver Data Generation**:
-   - Usage: ```python utilities/calcuate_optimal_values.py {hist_file_name}.hist {train|test} --ecmp_topo Abilene --opt_function {MAXUTIL | MAXFLOW | MAXCONC}```
+
+```python
+python utilities/calcuate_optimal_values.py {hist_file_name}.hist {train|test} --ecmp_topo Abilene --opt_function {MAXUTIL | MAXFLOW | MAXCONC}
+```
 3. **Robustness Calculation**: Calculate the robustness of a given algorithm using the generated data.   
 
 
