@@ -144,8 +144,19 @@ def process_args(args):
         gurobi_path = r"PATH_TO_GUROBI_REMOTE"
         oblivious_loc = r'PATH_TO_OBLIVIOUS_REMOTE'
     else:
-        #base_path = FolderPathCosts.BASE_PATH_LOCAL 
-        base_path = os.getcwd()[:os.getcwd().find("networking_envs")] + "networking_envs"
+        #base_path = FolderPathCosts.BASE_PATH_LOCAL
+        current_dir = os.getcwd()
+        index_dote = current_dir.find("DOTE/networking_envs")
+        if index_dote != -1:
+            base_path = current_dir[:index_dote] + "DOTE/networking_envs"
+        else:
+            index_tebench = current_dir.find("TEBench")
+            if index_tebench != -1:
+                base_path = current_dir[:index_tebench] + "TEBench/DOTE/networking_envs"
+            else:
+                base_path = os.path.join(current_dir, "TEBench/DOTE/networking_envs")
+
+        # base_path = os.getcwd()[:os.getcwd().find("networking_envs")] + "networking_envs"
         cplex_path = r"PATH_TO_CPLEX_LOCAL"
         gurobi_path = r"PATH_TO_GUROBI_LOCAL"
         oblivious_loc = r'PATH_TO_OBLIVIOUS_LOCAL'
