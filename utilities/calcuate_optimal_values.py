@@ -1,11 +1,12 @@
-from ..DOTE.networking_envs.networking_env.environments.ecmp.env_args_parse import parse_args
+from pathlib import Path
 
 import os
 from tqdm import tqdm
+import argparse
 
-from ..DOTE.networking_envs.data_gen import utils as DGU
-from ..DOTE.networking_envs.ml.sl_algos import utils as SLU
-
+from networking_envs.data_gen import utils as DGU
+from networking_envs.ml.sl_algos import utils as SLU
+from networking_envs.networking_env.environments.ecmp.env_args_parse import parse_args as custom_parse_args
 
 def output_to_routing(res):
     if isinstance(res, list):
@@ -21,25 +22,19 @@ def output_to_routing(res):
 
 
 def main(args):
-    # do this on a file by file basis
-    hist_name = args[0]
+    # should be like
+    # test.hist test --ecmp_topo B4 --opt_function MAXCONC
+    hist_file_name = args[0]
     train_test = args[1]
-    props = parse_args(args[2:])
+    props = custom_parse_args(args[2:])
 
-    print(f"hist_name: {hist_name}")
+    print(f"hist_name: {hist_file_name}")
     print(f"train_test: {train_test}")
     print(f"props: {props}")
 
-    base_folder = "%s/%s/" % (props.hist_location, props.ecmp_topo)
-
-    fname = "%s/%s/%s" % (base_folder, train_test, hist_name)
-
+    fname = Path(f"../traffic-matrices/original/{props.ecmp_topo}/{train_test}/{hist_file_name}/")
     tms = SLU.get_data([fname], None)
 
-    print(tms)
-
-    ############################
-    # do regualr
     tunnel_frac = []
     opt_res = []
     for i, tm in enumerate(tqdm(tms)):
@@ -53,10 +48,7 @@ def main(args):
     with open(fname + ".tunnels", 'w') as f:
         f.write('\n'.join(tunnel_frac))
 
-    ############################
-
 
 if __name__ == "__main__":
     import sys
-
     main(sys.argv[1:])
