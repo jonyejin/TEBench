@@ -161,3 +161,4 @@ cython_debug/
 
 # path folders
 topologies/paths/ncflow-edge-per-iter/
+TEAL/run/teal-logs/*
