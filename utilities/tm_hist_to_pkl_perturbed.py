@@ -6,7 +6,7 @@ import glob
 import pandas as pd
 
 # Root directory for all topology data
-root_dir = '/home/azureuser/TEBench/traffic-matrices/perturbated'
+root_dir = '/Users/yejin/TEBench/traffic-matrices/perturbated'
 
 # Ensure that the root directory exists
 if not os.path.exists(root_dir):
@@ -14,9 +14,11 @@ if not os.path.exists(root_dir):
 
 # Function to delete existing .pkl files in a directory
 def delete_existing_pkl_files(directory):
-    for pkl_file in glob.glob(os.path.join(directory, '*.pkl')):
-        os.remove(pkl_file)
-        print(f"Deleted existing file: {pkl_file}")
+    pkl_dir = os.path.join(directory, 'pkl')  # Define pkl subdirectory
+    if os.path.exists(pkl_dir):
+        for pkl_file in glob.glob(os.path.join(pkl_dir, '*.pkl')):
+            os.remove(pkl_file)
+            print(f"Deleted existing file: {pkl_file}")
 
 # Function to extract numbers from filename for sorting and indexing
 def extract_numbers(filename):
@@ -33,8 +35,12 @@ def read_and_convert_hist_file(hist_file_path):
                 data.append(line_data)
     return np.array(data)
 
-# Function to save data to a pickle file
-def save_to_pkl(data, output_file_path):
+# Function to save data to a pickle file in the 'pkl' subdirectory
+def save_to_pkl(data, directory, filename):
+    pkl_dir = os.path.join(directory, 'pkl')  # Define pkl subdirectory
+    if not os.path.exists(pkl_dir):
+        os.makedirs(pkl_dir)
+    output_file_path = os.path.join(pkl_dir, filename)
     if data.size > 0:  # Check if the data array is not empty
         with open(output_file_path, 'wb') as pkl_file:
             pickle.dump(data, pkl_file)
@@ -54,8 +60,7 @@ def process_directory(base_dir):
 
                 for index, row_data in enumerate(data_array):
                     pkl_file_name = f'{topology}.json_real_{index}_1.0_traffic-matrix.pkl'
-                    output_file_path = os.path.join(root, pkl_file_name)
-                    save_to_pkl(pd.DataFrame(row_data), output_file_path)
+                    save_to_pkl(pd.DataFrame(row_data), root, pkl_file_name)
 
 # Run the processing function for all subdirectories under the root directory
 process_directory(root_dir)
