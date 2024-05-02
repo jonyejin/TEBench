@@ -12,42 +12,38 @@ def output_to_routing(res):
     if isinstance(res, list):
         res = '\n'.join(res)
 
-    print(res)
-
     for line in res.split("\n"):
         if "Optimal result for actual demand:" in line:
             opt_res = line.split(":")[1].strip()
             print(opt_res)
             return None, opt_res
 
-
 def main(args):
-    # should be like
+    # Usage should be like:
     # test.hist test --ecmp_topo B4 --opt_function MAXCONC
     hist_file_name = args[0]
     train_test = args[1]
-    props = custom_parse_args(args[2:])
+    specific_dir = args[2]
 
-    print(f"hist_name: {hist_file_name}")
-    print(f"train_test: {train_test}")
-    print(f"props: {props}")
+    props = custom_parse_args(args[3:])
 
-    fname = Path(f"../traffic-matrices/original/{props.ecmp_topo}/{train_test}/{hist_file_name}/")
+    if specific_dir.__contains__("perturbated"):
+        fname = Path(f"../traffic-matrices/{specific_dir}/{hist_file_name}/")
+    else:
+        fname = Path(f"../traffic-matrices/{specific_dir}/{props.ecmp_topo}/{train_test}/{hist_file_name}/")
+
     tms = SLU.get_data([fname], None)
 
-    tunnel_frac = []
     opt_res = []
     for i, tm in enumerate(tqdm(tms)):
         res_str = DGU.get_opt_cplex(props, tm)
-        tunnels, opt = output_to_routing(res_str)
-        tunnel_frac.append(tunnels)
+        _, opt = output_to_routing(res_str)
         opt_res.append(opt)
-
-    with open(fname + ".opt", 'w') as f:
+    output_file_name = str(fname)[:-5] + "_" + props.opt_function + ".opt"
+    with open(output_file_name, 'w') as f:
         f.write('\n'.join(opt_res))
-    with open(fname + ".tunnels", 'w') as f:
-        f.write('\n'.join(tunnel_frac))
 
+    print(f"saved at {output_file_name}")
 
 if __name__ == "__main__":
     import sys
