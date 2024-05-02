@@ -40,3 +40,14 @@ $$
 * $\beta$: A weighting factor that modulates the impact of the Normalized Change on the overall metric.
 * $NC_i$: The Normalized Change for the $i$-th data set, indicating the change in the traffic matrix at the specific time step relative to its initial state.
 * $\textbf{Robustness}$: A measure that integrates both the efficiency of flow across the network (via $\lambda_i$) and the stability of this flow over time (accounting for changes via $NC_i$).
+
+## Utilities provided by TEBench
+1. **Perturbated Matrices Generation**: Generate perturbated traffic matrices with varying levels of sparsity and demand changes.
+    - Usage: ```python benchmark/add_perturbation.py```
+2. **LP-based Traffic Solver Data Generation**:
+   - Usage: ```python utilities/calcuate_optimal_values.py {hist_file_name}.hist {train|test} --ecmp_topo Abilene --opt_function {MAXUTIL | MAXFLOW | MAXCONC}```
+3. **Robustness Calculation**: Calculate the robustness of a given algorithm using the generated data.   
+
+
+## Disclaimer for Copyrights
+The works contained within the DOTE and TEAL folders are the property of the author of the paper. These materials are typically the intellectual products resulting from research and are owned by the researcher or writer who created them. This ownership implies that the author holds the copyright to the content in these folders, which may include data, written content, code, and other forms of intellectual property. This designation ensures that the author retains control over how these materials are used, distributed, or modified. 
